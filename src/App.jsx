@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
+import busImage from './assets/img/bus.png'
+import busSvg from './assets/svg/bus.svg'
 
 function BusService({ busArrivalData }) {
   return (
@@ -54,7 +56,7 @@ export default function App(){
       <Row className="vh-100">
         <Col lg={6} className="d-flex flex-column gap-3 px-5 py-2 py-md-5 ">
           <div className="d-flex justify-content-center">
-            <img src="src\assets\img\bus.png" className="img-fluid"/>
+            <img src={busImage} className="img-fluid"/>
           </div>
           <div className="px-4">
             <h1 style={{ fontSize: '64px', fontWeight: 'bold'}} >Bus Arrival App</h1>
@@ -75,7 +77,7 @@ export default function App(){
             {loading && (
               <>
                 <div className="d-flex flex-column justify-content-center align-items-center gap-3 h-100">
-                  <img src="src\assets\svg\bus.svg" alt="bus" />
+                  <img src={busSvg} alt="bus svg" />
                   <h1 className="fs-1 fw-bold" style={{ color: '#B8BDCE' }}>Loading...</h1>
                 </div>
               </>
