@@ -3,27 +3,39 @@ import { Col, Form, Row } from "react-bootstrap";
 import busImage from './assets/img/bus.png'
 import busSvg from './assets/svg/bus.svg'
 
-function BusService({ busArrivalData }) {
-  return (
-    <ul className="list-unstyled d-flex flex-column mt-5 gap-4">
-      {busArrivalData.services.map((service) => (
-        <li 
-          key={service.bus_no} 
-          className="d-flex justify-content-between align-items-center px-4 py-3 border border-dark rounded-pill"
-          role="listitem"
-        >
-          <span className="fs-4"><strong>Bus {service.bus_no}</strong></span>
-          <span className="fs-4">
-            {service.next_bus_mins < 0 ? (
-              <strong className="text-success">Arrived</strong>
-            ) : (
-              <strong>{service.next_bus_mins} min(s)</strong>
-            )}
-          </span>
-        </li>
-      ))}
-    </ul>
-  );
+function BusService({ busArrivalData, busStopId }) {
+  // Check if busArrivalData exists and has services
+  if (busArrivalData?.services?.length > 0) {
+    return (
+      <>
+        <h1 className="fw-bold">{`Bus Stop ${busStopId}`}</h1>
+        <ul className="list-unstyled d-flex flex-column mt-5 gap-4">
+          {busArrivalData.services.map((service) => (
+            <li 
+              key={service.bus_no} 
+              className="d-flex justify-content-between align-items-center px-4 py-3 border border-dark rounded-pill"
+              role="listitem"
+            >
+              <span className="fs-4"><strong>Bus {service.bus_no}</strong></span>
+              <span className="fs-4">
+                {service.next_bus_mins < 0 ? (
+                  <strong className="text-success">Arrived</strong>
+                ) : (
+                  <strong>{service.next_bus_mins} min(s)</strong>
+                )}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </>
+    );
+  } else if (!busStopId) {
+    // Case where busStopId is not provided
+    return <h1>Please Enter a Bus Stop ID</h1>;
+  } else {
+    // Case where busStopId is provided but there are no services
+    return <h1>{`Bus Stop ${busStopId} not found`}</h1>;
+  }
 }
 
 async function fetchBusArrival(id) {
@@ -61,7 +73,7 @@ export default function App(){
           <div className="px-4">
             <h1 style={{ fontSize: '64px', fontWeight: 'bold'}} >Bus Arrival App</h1>
             <p className="mt-3" style={{ fontSize: '20px'}}>
-              To experience the app, please enter the number 18141 or visit <u>this link</u> to find your bus number.
+              To experience the app, please enter the number 18141 or visit <a href="https://www.transitlink.com.sg/eservice/eguide/bscode_idx.php">this link</a> to find your bus number.
             </p>
           </div>
         </Col>
@@ -82,10 +94,9 @@ export default function App(){
                 </div>
               </>
             )}
-            {!loading && busArrivalData && busArrivalData.services && (
+            {!loading && (
               <>
-                <h1 className="fw-bold">Bus Stop 18141</h1>
-                <BusService busArrivalData={busArrivalData} />
+                <BusService busArrivalData={busArrivalData} busStopId={busStopId} />
               </>
             )}
           </div>
