@@ -47,6 +47,3 @@ Contributions to this project are welcome! If you have suggestions to improve it
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details.
 
----
-
-This version highlights the use of the specific API your project interacts with, providing context for how the `useEffect` hook is used in practical scenarios like fetching data from external sources.
